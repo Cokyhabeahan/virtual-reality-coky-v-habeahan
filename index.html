@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>Krakatoa Virtual Reality Tour</title>
+    <script src="./js/aframe/aframe.min.js"></script>
+    <script src="./js/aframe/aframe-event-set-component.min.js"></script>
+    <script src="./js/aframe/aframe-layout-component.min.js"></script>
+    <script src="./js/aframe/aframe-template-component.min.js"></script>
+    <script src="./js/aframe/aframe-proxy-event-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-assets>
+            <audio id="click-sound" crossorigin="anonymous" src="./audio/click.ogg"></audio>
+            <img id="krakatoa-01" crossorigin="anonymous" src="./assets/SAM_103_0636.jpg">
+            <img id="krakatoa-02" crossorigin="anonymous" src="./assets/SAM_103_0606.jpg">
+            <img id="krakatoa-03" crossorigin="anonymous" src="./assets/SAM_103_0610.jpg">
+            <img id="krakatoa-04" crossorigin="anonymous" src="./assets/SAM_103_0615.jpg">
+            <img id="krakatoa-05" crossorigin="anonymous" src="./assets/SAM_103_0626.jpg">
+            <img id="krakatoa-06" crossorigin="anonymous" src="./assets/SAM_103_0629.jpg">
+            <img id="krakatoa-07" crossorigin="anonymous" src="./assets/SAM_103_0632.jpg">
+            <img id="dermaga-sebesi-01" crossorigin="anonymous" src="./assets/SAM_103_0681.jpg">
+            <img id="dermaga-sebesi-02" crossorigin="anonymous" src="./assets/SAM_103_0686.jpg">
+            <img id="dermaga-canti-01" crossorigin="anonymous" src="./assets/SAM_103_0691.jpg">
+            <img id="dermaga-canti-02" crossorigin="anonymous" src="./assets/SAM_103_0699.jpg">
+
+            <!-- Image link template to be reused. -->
+            <script id="link" type="text/html">
+                <a-entity class="link" geometry="primitive: sphere; radius: 0.5; rotation: 90 0 90"
+                    material="shader: flat; src: ${thumb}" 
+                    animation__mouseenter="property: scale; to: 1.2 1.2 1.2; startEvents: mouseenter;dur:100"
+                    animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave;dur:100"
+                    event-set__click="_target: #image-360; _delay: 300; material.src: ${src}"
+                    proxy-event="event: click; to: #image-360; as: fade"
+                    sound="on: click; src: #click-sound">
+                </a-entity>
+            </script>
+        </a-assets>
+
+        <!-- Camera + cursor. -->
+        <a-entity id="camera" camera look-controls user-height="0" wasd-controls-enabled="false" position="0 0 0">
+            <a-cursor id="cursor" position="0 0 -20" geometry="primitive: circle; radius: 0.03;"
+                material="color: black; shader: flat" cursor="fuse: true; fuseTimeout: 2000;"
+                animation__click="property: scale; from: 0.5 0.5 0.5; to: 1 1 1;startEvents: click; dur: 150;easing:easeInQuad;"
+                animation__fusing="property: scale; from: 1 1 1; to: 0.5 0.5 0.5;startEvents: fusing; dur: 1000;easing:easeInQuad;"
+                animation__mouseenter="property: components.material.material.color; type: color; to: springgreen; startEvents: mouseenter;dur:0"
+                animation__mouseleave="property: components.material.material.color; type: color; to: black; startEvents: mouseleave;dur:0" 
+                raycaster="objects: .link"></a-cursor>
+        </a-entity>
+        <!-- 360-degree image. -->
+        <a-sky id="image-360" src="#krakatoa-01" radius="100"
+            animation__fade="property: components.material.material.color; type: color; from: #FFF; to: #000; dur: 300; startEvents: fade"
+            animation__fadeback="property: components.material.material.color; type: color; from: #000; to: #FFF; dur: 300; startEvents: animationcomplete__fade">
+        </a-sky>
+
+        <!-- Image links. -->
+        <a-text value="Krakatoa" position="-5 -4 0.5" rotation="0 90 0"></a-text>
+        <a-entity id="links" layout="type: line; margin: 1.5" position="-5 -3 1.5" rotation="-90 90 0">
+            <a-entity template="src: #link" data-src="#krakatoa-01" data-thumb="#krakatoa-01"></a-entity>
+            <a-entity template="src: #link" data-src="#krakatoa-02" data-thumb="#krakatoa-02"></a-entity>
+            <a-entity template="src: #link" data-src="#krakatoa-03" data-thumb="#krakatoa-03"></a-entity>
+        </a-entity>
+        <a-text value="Krakatoa" position="0 -4 -5" rotation="0 0 0"></a-text>
+        <a-entity id="links" layout="type: line; margin: 1.5" position="-2 -3 -5" rotation="-90 0 0">
+            <a-entity template="src: #link" data-src="#krakatoa-04" data-thumb="#krakatoa-04"></a-entity>
+            <a-entity template="src: #link" data-src="#krakatoa-05" data-thumb="#krakatoa-05"></a-entity>
+            <a-entity template="src: #link" data-src="#krakatoa-06" data-thumb="#krakatoa-06"></a-entity>
+            <a-entity template="src: #link" data-src="#krakatoa-07" data-thumb="#krakatoa-07"></a-entity>
+        </a-entity>
+        <a-text value="Sebesi Port" position="5 -4 -0.5" rotation="0 -90 0"></a-text>
+        <a-entity id="links" layout="type: line; margin: 1.5" position="5 -3 -0" rotation="-90 -90 0">
+            <a-entity template="src: #link" data-src="#dermaga-sebesi-01" data-thumb="#dermaga-sebesi-01"></a-entity>
+            <a-entity template="src: #link" data-src="#dermaga-sebesi-02" data-thumb="#dermaga-sebesi-02"></a-entity>
+        </a-entity>
+        <a-text value="Canti Port" position="0 -4 5" rotation="0 180 0"></a-text>
+        <a-entity id="links" layout="type: line; margin: 1.5" position="0 -3 5" rotation="-90 180 0">
+            <a-entity template="src: #link" data-src="#dermaga-canti-01" data-thumb="#dermaga-canti-01"></a-entity>
+            <a-entity template="src: #link" data-src="#dermaga-canti-02" data-thumb="#dermaga-canti-02"></a-entity>
+        </a-entity>
+
+    </a-scene>
+</body>
+
+</html>
