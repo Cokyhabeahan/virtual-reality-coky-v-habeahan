@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Virtual Tour</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <!-- Titik Awal -->
-      <a-sky id="image-360" src="#sphere1"></a-sky>
-      
-      <!-- Navigasi -->
-      <a-entity position="0 1.6 -3">
-        <a-box id="nav1" color="red" depth="0.5" height="0.5" width="0.5" position="-1 0 -2"></a-box>
-        <a-box id="nav2" color="blue" depth="0.5" height="0.5" width="0.5" position="1 0 -2"></a-box>
-      </a-entity>
+<head>
+  <meta charset="utf-8">
+  <title>Virtual Tour</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+  <!-- Splash Screen (Opsional) -->
+  <div id="splash-screen">
+    <h1>Welcome to the Virtual Tour</h1>
+    <button id="enter-tour">Enter</button>
+  </div>
 
-      <!-- Assets -->
-      <a-assets>
-        <img id="sphere1" src="images/sphere1.jpg">
-        <img id="sphere2" src="images/sphere2.jpg">
-        <!-- Tambahkan lebih banyak gambar sphere di sini -->
-      </a-assets>
-    </a-scene>
-    
-    <script>
-      document.querySelector('#nav1').addEventListener('click', function () {
-        document.querySelector('#image-360').setAttribute('src', '#sphere2');
-      });
-      document.querySelector('#nav2').addEventListener('click', function () {
-        document.querySelector('#image-360').setAttribute('src', '#sphere1');
-      });
-    </script>
-  </body>
+  <!-- Menu -->
+  <div id="menu" style="display:none;">
+    <h1>Virtual Tour Menu</h1>
+    <button id="start-tour">Start Tour</button>
+    <button id="guide">Guide</button>
+    <button id="about">About</button>
+  </div>
+
+  <!-- Virtual Tour Scene -->
+  <a-scene id="virtual-tour" style="display:none;">
+    <a-sky id="image-360" src="#sphere1"></a-sky>
+    <a-entity position="0 1.6 -3">
+      <a-box id="nav1" color="red" depth="0.5" height="0.5" width="0.5" position="-1 0 -2"></a-box>
+      <a-box id="nav2" color="blue" depth="0.5" height="0.5" width="0.5" position="1 0 -2"></a-box>
+    </a-entity>
+    <a-assets>
+      <img id="sphere1" src="assets/images/sphere1.jpg">
+      <img id="sphere2" src="assets/images/sphere2.jpg">
+      <!-- Tambahkan lebih banyak gambar sphere di sini -->
+    </a-assets>
+  </a-scene>
+
+  <!-- QRCode Section -->
+  <div id="qrcode-section" style="display:none;">
+    <h1>Scan QR Code to View the App</h1>
+    <img src="assets/qrcode/qrcode.png" alt="QR Code">
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
